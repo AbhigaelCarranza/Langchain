@@ -28,11 +28,12 @@ def load_documents_from_web():
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=1200, chunk_overlap=200,length_function=len)
     return text_splitter.split_documents(docs)
 
-def get_faiss_vectorStore(chunks,embeddings):
+def get_faiss_vectorStore(embeddings):
     if os.path.exists("arinc.pkl"):
         with open("arinc.pkl", "rb") as f:
             vector_store = pickle.load(f)
     else:
+        chunks=load_documents()
         vector_store=FAISS.from_documents(chunks, embeddings)
         with open("arinc.pkl", "wb") as f:
             pickle.dump(vector_store, f)

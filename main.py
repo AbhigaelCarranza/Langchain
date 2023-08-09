@@ -41,9 +41,9 @@ if not openai_api_key:
 
 @st.cache_resource(ttl="1h")
 def configure_retriever():
-    documents=load_documents()
+    # documents=load_documents()
     embeddings = OpenAIEmbeddings()
-    vector_store=get_faiss_vectorStore(documents,embeddings)
+    vector_store=get_faiss_vectorStore(embeddings)
     return vector_store.as_retriever(search_type="similarity", search_kwargs={"k": 4})
 
 tool= create_retriever_tool(
