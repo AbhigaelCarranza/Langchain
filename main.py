@@ -13,8 +13,13 @@ from langchain.schema import SystemMessage, AIMessage, HumanMessage
 from langchain.prompts import MessagesPlaceholder
 from langsmith import Client
 from Utils.utils import load_documents, get_faiss_vectorStore
+from dotenv import load_dotenv
 
 client = Client()
+load_dotenv()
+
+st.set_page_config(page_title="Chatbot ARINC 653P1-2", page_icon=":robot_face:")
+st.title("Chatbot ARINC 653P1-2")
 
 with st.sidebar:
     st.title("LLM ARINC 653P1-2")
@@ -29,12 +34,17 @@ with st.sidebar:
     add_vertical_space(2)
     st.write("Follow me on [Linkedin](https://www.linkedin.com/in/abhigaelcarranza/)")
 
+openai_api_key = st.sidebar.text_input("OpenAI API Key", type="password")
+if not openai_api_key:
+    st.info("Please add your OpenAI API key to continue.")
+    st.stop()
+
 @st.cache_resource(ttl="1h")
 def configure_retriever():
     documents=load_documents()
     embeddings = OpenAIEmbeddings()
     vector_store=get_faiss_vectorStore(documents,embeddings)
-    return vector_store.as_retriever(search_type="similarity", search_kwargs={"k": 3})
+    return vector_store.as_retriever(search_type="similarity", search_kwargs={"k": 4})
 
 tool= create_retriever_tool(
     configure_retriever(),
@@ -43,7 +53,7 @@ tool= create_retriever_tool(
     )
 
 tools=[tool]
-llm=ChatOpenAI(temperature=0,streaming=True,model_name="gpt-3.5-turbo")
+llm=ChatOpenAI(temperature=0,streaming=True,model_name="gpt-3.5-turbo",openai_api_key=openai_api_key)
 message=SystemMessage(
     content=(
         "You are a helpful chatbot who is tasked with answering questions about ARINC 653P1-2. "

@@ -1,5 +1,4 @@
 from langchain.document_loaders import PyPDFLoader
-from dotenv import load_dotenv
 from langchain.vectorstores import FAISS
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 import tempfile
@@ -8,7 +7,6 @@ import os
 import streamlit as st
 
 def load_documents():
-    load_dotenv()
     file="/mnt/c/Users/amendez/github/Langchain/Files/ARINC_653P1-2.pdf"
     pdf=PyPDFLoader(file)
     loaders=pdf.load()
