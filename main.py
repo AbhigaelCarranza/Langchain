@@ -44,7 +44,7 @@ def configure_retriever():
     # documents=load_documents()
     embeddings = OpenAIEmbeddings(openai_api_key=openai_api_key)
     vector_store=get_faiss_vectorStore(embeddings)
-    return vector_store.as_retriever(search_type="similarity", search_kwargs={"k": 4})
+    return vector_store.as_retriever(search_type="similarity", search_kwargs={"k": 3})
 
 tool= create_retriever_tool(
     configure_retriever(),
