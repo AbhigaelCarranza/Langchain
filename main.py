@@ -53,7 +53,7 @@ tool= create_retriever_tool(
     )
 
 tools=[tool]
-llm=ChatOpenAI(temperature=0,streaming=True,model_name="gpt-3.5-turbo",openai_api_key=openai_api_key,max_tokens=1000)
+llm=ChatOpenAI(temperature=0,streaming=True,model_name="gpt-3.5-turbo",openai_api_key=openai_api_key,max_tokens=600)
 message=SystemMessage(
     content=(
         """
@@ -78,7 +78,7 @@ agent_executor=AgentExecutor(
     return_intermediate_steps=True,
 )
 
-memory=AgentTokenBufferMemory(llm=llm,max_token_limit=2000)
+memory=AgentTokenBufferMemory(llm=llm,max_token_limit=4000)
 starter_message="Ask me a question about ARINC 653P1-2."
 
 if "messages" not in st.session_state or st.sidebar.button("Clear message history"):

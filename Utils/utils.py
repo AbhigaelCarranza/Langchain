@@ -7,7 +7,7 @@ import os
 import streamlit as st
 
 def load_documents():
-    file="/mnt/c/Users/amendez/github/Langchain/Files/ARINC_653P1-2.pdf"
+    file="/mnt/c/Users/amendez/github/Langchain/Files/ARINC_653P1-2-Div.pdf"
     pdf=PyPDFLoader(file)
     loaders=pdf.load()
     
