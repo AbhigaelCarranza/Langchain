@@ -53,7 +53,7 @@ tool= create_retriever_tool(
     )
 
 tools=[tool]
-llm=ChatOpenAI(temperature=0,streaming=True,model_name="gpt-3.5-turbo",openai_api_key=openai_api_key,max_tokens=600)
+llm=ChatOpenAI(temperature=0,streaming=True,model_name="gpt-3.5-turbo",openai_api_key=openai_api_key,max_tokens=1000)
 message=SystemMessage(
     content=(
         """
