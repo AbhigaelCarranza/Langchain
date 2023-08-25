@@ -34,15 +34,15 @@ with st.sidebar:
     add_vertical_space(2)
     st.write("Follow me on [Linkedin](https://www.linkedin.com/in/abhigaelcarranza/)")
 
-openai_api_key = st.sidebar.text_input("OpenAI API Key", type="password")
-if not openai_api_key:
-    st.info("Please add your OpenAI API key to continue.")
-    st.stop()
+# openai_api_key = st.sidebar.text_input("OpenAI API Key", type="password")
+# if not openai_api_key:
+#     st.info("Please add your OpenAI API key to continue.")
+#     st.stop()
 
 @st.cache_resource(ttl="1h")
 def configure_retriever():
     # documents=load_documents()
-    embeddings = OpenAIEmbeddings(openai_api_key=openai_api_key)
+    embeddings = OpenAIEmbeddings()
     vector_store=get_faiss_vectorStore(embeddings)
     return vector_store.as_retriever(search_type="similarity", search_kwargs={"k": 3})
 
@@ -53,7 +53,7 @@ tool= create_retriever_tool(
     )
 
 tools=[tool]
-llm=ChatOpenAI(temperature=0,streaming=True,model_name="gpt-3.5-turbo",openai_api_key=openai_api_key,max_tokens=1000)
+llm=ChatOpenAI(temperature=0,streaming=True,model_name="gpt-3.5-turbo",max_tokens=1000)
 message=SystemMessage(
     content=(
         """
