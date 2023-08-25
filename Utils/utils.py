@@ -7,7 +7,6 @@ import os
 import streamlit as st
 from dotenv import load_dotenv
 
-load_dotenv()
 
 def load_documents():
     file="/mnt/c/Users/amendez/github/Langchain/Files/ARINC_653P1-2-Div.pdf"
